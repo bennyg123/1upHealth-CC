@@ -1,0 +1,26 @@
+{
+  "name": "1uphealth-coding-challenge",
+  "version": "1.0.0",
+  "description": "Coding Challenge for 1upHealth",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build && next export",
+    "start": "next start"
+  },
+  "author": "Benny Guan",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cookie": "^0.4.0",
+    "next": "^9.3.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "@types/node": "^13.11.1",
+    "@types/react": "^16.9.34",
+    "prettier": "2.0.4",
+    "typescript": "^3.8.3"
+  }
+}
