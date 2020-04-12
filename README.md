@@ -9,21 +9,21 @@ Once I got the general flow working, the next step was converting the data to so
 
 API Endpoints:
 
-URL: http://localhost:3000/api/patientInfo
-Method: GET
-Params:
-Optional:
-accessToken=[string]
-patientID=[string]
-Outputs:
-Patient Profile Info
+URL: http://localhost:3000/api/patientInfo  
+Method: GET  
+Params:  
+Optional:  
+accessToken=[string]  
+patientID=[string]  
+Outputs:  
+Patient Profile Info  
 
-URL: http://localhost:3000/api/patientData
-Method: GET
-Params:
-Optional:
-skip=[number]
-accessToken=[string]
-patientID=[string]
-Outputs:
-\$Everything query with the results mapped to a {type: string, details: JSON}
+URL: http://localhost:3000/api/patientData  
+Method: GET  
+Params:  
+Optional:  
+skip=[number]  
+accessToken=[string]  
+patientID=[string]  
+Outputs:  
+\$Everything query with the results mapped to a {type: string, details: JSON}  

@@ -16,7 +16,7 @@ const getPatientData = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (!accessToken) {
       const tokenResponse = await getAccessToken(
-        req.query["patientID"] as string
+        req.query["patientName"] as string
       );
       accessToken = tokenResponse.accessToken;
       expiresIn = tokenResponse.expiresIn;

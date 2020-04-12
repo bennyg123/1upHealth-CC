@@ -17,23 +17,28 @@ const Index = () => {
   const [page, setPage] = useState(0);
   const accessTokenRef = useRef<HTMLInputElement>();
   const patientNameRef = useRef<HTMLInputElement>();
+  const patientIDRef = useRef<HTMLInputElement>();
+
   const [maxPages, setMaxPages] = useState(0);
   const [patientData, setPatientData] = useState(null);
   const [patientInfo, setPatientInfo] = useState(null);
 
   // Defaults the patient ID to Jason Argonaut
   const [patientID, setPatientID] = useState("f8fedcd9e6e5");
+  const [patientName, setPatientName] = useState("testuser");
 
   // Fetches the patient data to display
   const fetchPatientData = async (
     page: number,
     accessToken?: string,
-    pID?: string
+    pID?: string,
+    pName?: string
   ) => {
     const { data } = await axios.get(
       `/api/patientData?skip=${page * 10}${
         accessToken ? "&accessToken=" + accessToken : ""
-      }${patientID || pID ? "&patientID=" + patientID || pID : ""}`
+      }${patientID || pID ? "&patientID=" + patientID || pID : ""}${
+        patientName || pName ? "&patientName=" + patientName || pName : ""}`
     );
     //If theres an error, we error out to the console
     if (data.error) {
@@ -49,12 +54,12 @@ const Index = () => {
     setPatientData(data);
   };
 
-  const fetchPatientInfo = async (accessToken?: string, pID?: string) => {
+  const fetchPatientInfo = async (accessToken?: string, pID?: string, pName?: string) => {
     // fetches the patient info
     const { data } = await axios.get(
       `/api/patientInfo?${accessToken ? "accessToken=" + accessToken : ""}${
         patientID || pID ? "&patientID=" + patientID || pID : ""
-      }`
+      }${patientName || pName ? "&patientName=" + patientName || pName : ""}`
     );
     // errors out if we get an error
     if (data.error) {
@@ -76,11 +81,13 @@ const Index = () => {
     e.preventDefault();
 
     let accessToken = accessTokenRef?.current.value;
+    let pName = patientNameRef?.current.value;
     let pID = patientNameRef?.current.value;
 
     // Sets the patient ID for future queries
     // The access token is already set via the cookie
     setPatientID(pID);
+    setPatientName(pName);
 
     setPage(0);
     fetchPatientData(0, accessToken, pID);
@@ -110,8 +117,14 @@ const Index = () => {
           type="text"
         />
         <input
-          ref={patientNameRef}
+          ref={patientIDRef}
           placeholder={"Please enter patient ID"}
+          required
+          type="text"
+        />
+        <input
+          ref={patientNameRef}
+          placeholder={"Please enter patient name"}
           required
           type="text"
         />
