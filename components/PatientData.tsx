@@ -6,6 +6,7 @@ const PatientData = ({
     details: { [keys: string]: string };
   }[];
 }) => {
+  // Displays a simple representation of the patient data from the $everything query
   return (
     <>
       <ul className="patientData">

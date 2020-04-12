@@ -14,9 +14,11 @@ import {
   AllergyIntolerance,
 } from "./_types/_patientData";
 
+// Maps each of the resources to a normalized format, since I was not sure which information
+// was required, the resulting maps are a bit biased and based on my own opions of what should be shown
+
 const mapPatientResources = (entry: { resource: PatientEntry }[]) => {
   return entry.map(({ resource }) => {
-    console.log(resource.resourceType);
     switch (resource.resourceType) {
       case "Patient":
         return mapPatientEntry(resource as Patient);

@@ -10,16 +10,18 @@ const getPatientData = async (req: NextApiRequest, res: NextApiResponse) => {
   const skip = req.query["skip"] as string;
 
   try {
+    // Checks if the access token is passed in and if not generates a new access token
     let accessToken = req.query["accessToken"] || req.cookies["access_token"];
     let expiresIn = "0";
 
     if (!accessToken) {
       const tokenResponse = await getAccessToken(
-        req.query["patientName"] as string
+        req.query["patientID"] as string
       );
       accessToken = tokenResponse.accessToken;
       expiresIn = tokenResponse.expiresIn;
 
+      // Sets it in the cookie for future usuage
       res.setHeader(
         "Set-Cookie",
         serialize("access_token", accessToken, {
@@ -29,8 +31,9 @@ const getPatientData = async (req: NextApiRequest, res: NextApiResponse) => {
       );
     }
 
+    // Grabs the $everythng data with the accessToken
     const { data }: { data: PatientDataResponse } = await axios.get(
-      everythingEndpoint(skip, req.query["patientName"] as string),
+      everythingEndpoint(skip, req.query["patientID"] as string),
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -40,6 +43,13 @@ const getPatientData = async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.json({
       ...data,
+      /* Since each resource type is different , mapPatientResources maps all the data
+         to a normalize form : {
+           type: string,
+           details: JSON
+         }
+         to more easily display it on the frontend and make it "Human Readable"
+      */
       entry: mapPatientResources(data.entry),
     });
   } catch (e) {
